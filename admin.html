@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Silt Admin</title>
+    <meta name="description" content="Silt 포트폴리오와 문의를 관리하는 관리자 페이지" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css?v=30" />
+    <link rel="stylesheet" href="./admin.css?v=20" />
+  </head>
+  <body class="admin-body">
+    <div class="sediment-bg" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <main class="admin-shell" aria-label="Silt 관리자">
+      <section class="admin-window">
+        <aside class="admin-sidebar" aria-label="관리 메뉴">
+          <div class="window-title">
+            <div class="traffic" aria-hidden="true">
+              <span class="traffic-dot red"></span>
+              <span class="traffic-dot yellow"></span>
+              <span class="traffic-dot green"></span>
+            </div>
+            <strong>Silt Admin</strong>
+          </div>
+
+          <nav class="side-nav admin-nav" aria-label="관리 섹션">
+            <p class="nav-kicker">관리</p>
+            <button class="nav-item is-active" type="button" data-admin-tab="dashboard">
+              <span class="mini-icon folder-mini" aria-hidden="true"></span>
+              <span>대시보드</span>
+            </button>
+            <button class="nav-item" type="button" data-admin-tab="works">
+              <span class="mini-icon folder-mini" aria-hidden="true"></span>
+              <span>폴더 관리</span>
+            </button>
+            <button class="nav-item" type="button" data-admin-tab="files">
+              <span class="mini-icon folder-mini" aria-hidden="true"></span>
+              <span>파일</span>
+            </button>
+            <button class="nav-item" type="button" data-admin-tab="assets">
+              <span class="mini-icon folder-mini" aria-hidden="true"></span>
+              <span>이미지</span>
+            </button>
+            <button class="nav-item" type="button" data-admin-tab="inquiries">
+              <span class="mini-icon folder-mini" aria-hidden="true"></span>
+              <span>문의</span>
+            </button>
+            <button class="nav-item" type="button" data-admin-tab="content">
+              <span class="mini-icon folder-mini" aria-hidden="true"></span>
+              <span>메뉴 / 문구</span>
+            </button>
+            <a class="nav-item" href="./index.html?v=28">
+              <span class="mini-icon folder-mini" aria-hidden="true"></span>
+              <span>사이트 보기</span>
+            </a>
+          </nav>
+        </aside>
+
+        <section class="admin-main">
+          <header class="admin-toolbar">
+            <div class="path-chip">
+              <span class="mini-icon folder-mini" aria-hidden="true"></span>
+              <span id="adminPath">Silt Admin / 대시보드</span>
+            </div>
+            <div class="admin-actions">
+              <button class="admin-button ghost" type="button" id="resetData">초기화</button>
+              <button class="admin-button" type="button" id="saveData">저장</button>
+            </div>
+          </header>
+
+          <div class="admin-content">
+            <section class="admin-panel is-active" data-admin-panel="dashboard">
+              <div class="admin-heading">
+                <p class="file-label">Overview</p>
+                <h1>Silt 사이트 관리</h1>
+                <p>폴더, 메뉴, 파일, 이미지를 분리해서 관리합니다. 수정값은 이 브라우저에 저장됩니다.</p>
+              </div>
+
+              <div class="metric-grid">
+                <article class="metric-card">
+                  <span>작업물</span>
+                  <strong id="workCount">0</strong>
+                  <small>카테고리 + 프로젝트</small>
+                </article>
+                <article class="metric-card">
+                  <span>문의</span>
+                  <strong id="inquiryCount">0</strong>
+                  <small>샘플 수신함</small>
+                </article>
+                <article class="metric-card">
+                  <span>파일</span>
+                  <strong id="fileCount">0</strong>
+                  <small>브라우저 저장소</small>
+                </article>
+                <article class="metric-card">
+                  <span>상태</span>
+                  <strong>Live</strong>
+                  <small>정적 사이트</small>
+                </article>
+              </div>
+
+              <div class="dashboard-module-grid">
+                <button class="dashboard-module-card" type="button" data-admin-jump="works">
+                  <span>01</span>
+                  <strong>폴더 관리</strong>
+                  <small>서비스와 대표 작업물 폴더를 하나씩 선택해 수정합니다.</small>
+                </button>
+                <button class="dashboard-module-card" type="button" data-admin-jump="files">
+                  <span>02</span>
+                  <strong>파일 관리</strong>
+                  <small>이미지, 영상, PDF를 업로드하고 폴더에 연결합니다.</small>
+                </button>
+                <button class="dashboard-module-card" type="button" data-admin-jump="assets">
+                  <span>03</span>
+                  <strong>이미지 슬롯</strong>
+                  <small>사이트 대표 이미지와 프리뷰 이미지를 교체합니다.</small>
+                </button>
+                <button class="dashboard-module-card" type="button" data-admin-jump="content">
+                  <span>04</span>
+                  <strong>메뉴 / 문구</strong>
+                  <small>사이트 이름, 메뉴명, 팝업, 문의 폼 문구를 수정합니다.</small>
+                </button>
+              </div>
+
+              <div class="admin-grid two">
+                <article class="admin-card">
+                  <h2>폴더 현황</h2>
+                  <div class="mini-list" id="recentWorks"></div>
+                </article>
+                <article class="admin-card">
+                  <h2>관리 메모</h2>
+                  <label class="admin-field">
+                    <span>운영 메모</span>
+                    <textarea data-field="memo" rows="7"></textarea>
+                  </label>
+                </article>
+              </div>
+            </section>
+
+            <section class="admin-panel" data-admin-panel="works">
+              <div class="admin-heading">
+                <p class="file-label">Folders</p>
+                <h1>폴더 관리</h1>
+                <p>왼쪽 서비스 메뉴와 대표 작업물 메뉴에 보이는 폴더를 추가하고 정리합니다.</p>
+              </div>
+              <div class="work-admin-grid" id="workEditor"></div>
+            </section>
+
+            <section class="admin-panel" data-admin-panel="files">
+              <div class="admin-heading">
+                <p class="file-label">Files</p>
+                <h1>파일 관리</h1>
+                <p>파일을 업로드하고 카테고리 / 작업물에 연결합니다. 미리보기 이미지는 4:5 비율로 표시됩니다.</p>
+              </div>
+
+              <div class="file-manager-layout">
+                <form class="upload-card" id="fileUploadForm">
+                  <label class="upload-drop">
+                    <input id="fileInput" type="file" multiple accept="image/*,video/*,.pdf" />
+                    <strong>파일 선택</strong>
+                    <span>이미지, 영상, PDF를 여러 개 추가할 수 있습니다.</span>
+                  </label>
+                  <div class="admin-grid two compact">
+                    <label class="admin-field">
+                      <span>대제목</span>
+                      <input id="fileTitle" placeholder="예: Cover Direction" />
+                    </label>
+                    <label class="admin-field">
+                      <span>소제목</span>
+                      <input id="fileSubtitle" placeholder="예: front cover / draft" />
+                    </label>
+                    <label class="admin-field">
+                      <span>팝업 이름</span>
+                      <input id="filePopupName" placeholder="예: 계간미스터리 표지 상세" />
+                    </label>
+                    <label class="admin-field">
+                      <span>연결 카테고리 / 작업물</span>
+                      <select id="fileWork"></select>
+                    </label>
+                    <label class="admin-field">
+                      <span>분류</span>
+                      <input id="fileCategory" placeholder="예: key visual, cover, teaser" />
+                    </label>
+                    <label class="admin-field">
+                      <span>공개 상태</span>
+                      <select id="fileStatus">
+                        <option>공개</option>
+                        <option>비공개</option>
+                        <option>준비중</option>
+                      </select>
+                    </label>
+                  </div>
+                  <button class="admin-button" type="submit">선택 파일 추가</button>
+                </form>
+
+                <section class="admin-card library-panel">
+                  <div class="library-toolbar">
+                    <h2>파일 라이브러리</h2>
+                    <select id="fileFilter" aria-label="카테고리 및 작업물 필터"></select>
+                  </div>
+                  <div class="file-library" id="fileLibrary"></div>
+                </section>
+              </div>
+            </section>
+
+            <section class="admin-panel" data-admin-panel="assets">
+              <div class="admin-heading">
+                <p class="file-label">Images</p>
+                <h1>사이트 이미지 관리</h1>
+                <p>오른쪽 프리뷰 영역과 사이트 안의 주요 이미지 슬롯을 직접 바꿉니다. 작업물 폴더 썸네일은 작업물 탭에서 바꿀 수 있습니다.</p>
+              </div>
+              <div class="site-image-grid" id="imageSlotEditor"></div>
+              <div class="admin-heading compact-heading">
+                <p class="file-label">Documents</p>
+                <h2>사이트 문서 관리</h2>
+                <p>홈 문서 영역에 연결되는 PDF 파일을 교체합니다.</p>
+              </div>
+              <div class="site-document-grid" id="documentSlotEditor"></div>
+            </section>
+
+            <section class="admin-panel" data-admin-panel="inquiries">
+              <div class="admin-heading">
+                <p class="file-label">Inbox</p>
+                <h1>문의 관리</h1>
+                <p>정적 페이지용 샘플 수신함입니다. 실제 수신은 추후 메일/API 연동이 필요합니다.</p>
+              </div>
+              <div class="inquiry-list" id="inquiryList"></div>
+            </section>
+
+            <section class="admin-panel" data-admin-panel="content">
+              <div class="admin-heading">
+                <p class="file-label">Menu</p>
+                <h1>메뉴 / 문구 관리</h1>
+                <p>왼쪽 메뉴 이름, 문의 버튼, 소개 팝업, 문의 폼 문구를 관리합니다.</p>
+              </div>
+              <div class="copy-editor-grid" id="siteTextEditor"></div>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div class="admin-toast" id="adminToast" role="status" aria-live="polite"></div>
+    <script src="./admin.js?v=21"></script>
+  </body>
+</html>
